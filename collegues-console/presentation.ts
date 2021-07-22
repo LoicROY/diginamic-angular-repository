@@ -1,5 +1,5 @@
 const readline = require("readline");
-import { getAll, getById, create, update, erase } from "./service";
+import { getAll, getById, create, update, erase, voter } from "./service";
 import { CollegueInterface } from "./model";
 import { getRandomInt } from "./random";
 
@@ -14,6 +14,8 @@ export function demarrer() {
   console.log("3. Créer un collègue");
   console.log("4. Modifier un collègue");
   console.log("5. Supprimer un collègue");
+  console.log("6. Voter");
+  console.log("7. Classement");
   console.log("99. Sortir");
 }
 
@@ -44,7 +46,12 @@ export function askUser() {
       case "3":
         rl.question("nom du collegue a ajouter : ", (nom: string) => {
           rl.question("prenom du collegue a ajouter : ", (prenom: string) => {
-            create({ id: `${getRandomInt()}`, nom, prenom, societe: "test" }).then(() => askUser());
+            create({
+              id: `${getRandomInt()}`,
+              nom,
+              prenom,
+              societe: "test",
+            }).then(() => askUser());
           });
         });
         break;
@@ -69,13 +76,40 @@ export function askUser() {
         });
         break;
 
+      case "6":
+        rl.question("id du collegue visé : ", (collegue_id: string) => {
+            rl.question("like or dislike ?", (like: string) => {
+                switch (like) {
+                    case "like":
+                        voter( { collegue_id, like: true, id: getRandomInt().toString() } )
+                        .then(() => askUser());
+                        break;
+                    
+                    case "dislike":
+                        voter( { collegue_id, like: false, id: getRandomInt().toString() } )
+                        .then(() => askUser());
+                        break;
+                
+                    default:
+                        console.log(like + " n'est pas une option valable \n")
+                        askUser();
+                        break;
+                }
+              });
+          });
+        break;
+
+      case "7":
+        //classement
+        break;
+
       case "99":
         console.log("Au revoir");
         rl.close();
         break;
 
       default:
-        console.log(answer + " is not a option \n");
+        console.log(answer + " n'est pas une option valable \n");
         askUser();
         break;
     }
