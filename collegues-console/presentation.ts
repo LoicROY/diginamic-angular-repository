@@ -44,7 +44,7 @@ export function askUser() {
       case "3":
         rl.question("nom du collegue a ajouter : ", (nom: string) => {
           rl.question("prenom du collegue a ajouter : ", (prenom: string) => {
-            create({ id: `${getRandomInt()}`, nom, prenom }).then(() => askUser());
+            create({ id: `${getRandomInt()}`, nom, prenom, societe: "test" }).then(() => askUser());
           });
         });
         break;
