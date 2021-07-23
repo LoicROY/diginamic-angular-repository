@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-import { CollegueInterface, VoteInterface } from "./model";
+import { CollegueCreate, Collegue, VoteInterface } from "./model";
 
 const FAILED_MESSAGE: string = "Operation failed !";
 const SUCCEEDED_MESSAGE: string = "Operation succeeded !";
@@ -18,7 +18,7 @@ export class Service {
         .catch(() => console.log(FAILED_MESSAGE + "\n"));
     }
 
-    create(collegue: CollegueInterface): Promise<any> {
+    create(collegue: CollegueCreate): Promise<any> {
         return fetch("https://c1.cleverapps.io/collegues", {
             method: 'POST',
             body: JSON.stringify(collegue),
@@ -28,7 +28,7 @@ export class Service {
         .catch(() => console.log(FAILED_MESSAGE + "\n"));
     }
 
-    update(collegue: CollegueInterface): Promise<any> {
+    update(collegue: Partial<Collegue>): Promise<any> {
         return fetch(`https://c1.cleverapps.io/collegues/${collegue.id}`, {
             method: 'PATCH',
             body: JSON.stringify(collegue),
@@ -49,7 +49,7 @@ export class Service {
 
     voter(vote: VoteInterface): Promise<any> {
         return fetch("https://c1.cleverapps.io/votes", {
-            method: 'DELETE',
+            method: 'POST',
             body: JSON.stringify(vote),
             headers: {'Content-Type': 'application/json'}
         })

@@ -1,6 +1,6 @@
 const readline = require("readline");
 import {Service} from "../common/service";
-import { CollegueInterface } from "../common/model";
+import { Collegue } from "../common/model";
 import { getRandomInt } from "../common/random";
 
 const { getAll, getById, create, update, erase, voter } = new Service();
@@ -27,7 +27,7 @@ export function askUser() {
     switch (answer) {
       case "1":
         console.log(">> Liste des clients \n");
-        getAll().then((value: CollegueInterface[]) => {
+        getAll().then((value: Collegue[]) => {
           value.forEach((element) =>
             console.log(`${element.id} : ${element.nom} ${element.prenom}`)
           );
@@ -38,7 +38,7 @@ export function askUser() {
 
       case "2":
         rl.question("Id du collègue voulu : ", (id: string) => {
-          getById(id).then((value: CollegueInterface) => {
+          getById(id).then((value: Collegue) => {
             console.log(`${value.id} : ${value.nom} ${value.prenom} \n`);
             askUser();
           });
@@ -51,8 +51,7 @@ export function askUser() {
             create({
               id: `${getRandomInt()}`,
               nom,
-              prenom,
-              societe: "test",
+              prenom
             }).then(() => askUser());
           });
         });
@@ -60,7 +59,7 @@ export function askUser() {
 
       case "4":
         rl.question("id du collegue a modifier : ", (id: string) => {
-          getById(id).then((value: CollegueInterface) => {
+          getById(id).then((value: Collegue) => {
             rl.question("nouveau nom : ", (nom: string) => {
               rl.question("nouveau prenom : ", (prenom: string) => {
                 value.nom = nom;
