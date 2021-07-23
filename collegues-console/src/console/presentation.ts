@@ -1,7 +1,9 @@
 const readline = require("readline");
-import { getAll, getById, create, update, erase, voter } from "./service";
-import { CollegueInterface } from "./model";
-import { getRandomInt } from "./random";
+import {Service} from "../common/service";
+import { CollegueInterface } from "../common/model";
+import { getRandomInt } from "../common/random";
+
+const { getAll, getById, create, update, erase, voter } = new Service();
 
 const rl = readline.createInterface({
   input: process.stdin,
