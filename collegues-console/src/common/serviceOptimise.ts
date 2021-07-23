@@ -5,8 +5,11 @@ const SUCCEEDED_MESSAGE: string = "Operation succeeded !";
 
 export class Service {
 
-    async getAll(): Promise<Collegue[]> {
+    async getAll(): Promise<Collegue[]> {        
         const response = await fetch("https://c1.cleverapps.io/collegues");
+        console.log(response);
+        // response.json().then(data => console.log(data));
+
         return response.json();
     }
 
@@ -34,7 +37,7 @@ export class Service {
     }
 
     async erase(id: string): Promise<string> {
-        const response = await fetch(`https://c1.cleverapps.io/collegues/${id}`, {
+        await fetch(`https://c1.cleverapps.io/collegues/${id}`, {
             method: 'DELETE',
             headers: {'Content-Type': 'application/json'}
         });
@@ -42,7 +45,7 @@ export class Service {
     }
 
     async voter(vote: VoteInterface): Promise<string> {
-        const response = await fetch("https://c1.cleverapps.io/votes", {
+        await fetch("https://c1.cleverapps.io/votes", {
             method: 'POST',
             body: JSON.stringify(vote),
             headers: {'Content-Type': 'application/json'}
